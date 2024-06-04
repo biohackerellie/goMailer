@@ -20,14 +20,13 @@ builds:
       - CGO_ENABLED=0
     goos:
       - linux
-    binary: goMailer
-
+    binary: gomailer
 dockers:
   - use: buildx
     goos: linux
     image_templates:
-      - 'ghcr.io/biohackerellie/goMailer:latest'
-      - 'ghcr.io/biohackerellie/goMailer:{{ .Version }}'
+      - 'ghcr.io/biohackerellie/{{ .ProjectName }}:latest'
+      - 'ghcr.io/biohackerellie/{{ .ProjectName }}:{{ .Version }}'
     build_flag_templates:
       - '--platform=linux/amd64'
       - '--label=org.opencontainers.image.created={{.Date}}'
@@ -40,3 +39,12 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+checksum:
+  # https://goreleaser.com/customization/checksum/
+  name_template: 'checksums.txt'
+snapshot:
+  # https://goreleaser.com/customization/snapshots/
+  name_template: '{{ incpatch .Version }}-SNAPSHOT'
+source:
+  # https://goreleaser.com/customization/source/
+  enabled: true

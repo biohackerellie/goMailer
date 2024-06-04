@@ -1,5 +1,5 @@
 FROM alpine:latest
 WORKDIR "/app"
-COPY goMailer /app/goMailer
+COPY gomailer /app/gomailer
 
-ENTRYPOINT ["/app/goMailer"]
+ENTRYPOINT ["/app/gomailer"]
