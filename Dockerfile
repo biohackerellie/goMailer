@@ -1,10 +1,5 @@
-FROM golang:1.22.3-alpine
+FROM alpine:latest
+WORKDIR "/app"
+COPY goMailer /app/goMailer
 
-WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download && go mod verify
-
-COPY . .
-RUN go build -v -o /usr/local/bin/goMailer ./... 
-
-CMD ["goMailer"]
+ENTRYPOINT ["/app/goMailer"]
