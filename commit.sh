@@ -25,7 +25,7 @@ fi
 VERSION_TYPE=$(gum choose "major" "minor" "patch")
 
 # Get the latest tag
-# LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
 LATEST_TAG=${LATEST_TAG:-v0.0.0} # Default to v0.0.0 if no tags are found
 
 # Extract the major, minor, and patch numbers
