@@ -20,13 +20,14 @@ builds:
       - CGO_ENABLED=0
     goos:
       - linux
+    binary: goMailer
 
 dockers:
   - use: buildx
     goos: linux
     image_templates:
-      - 'ghcr.io/biohackerellie/gomailer:latest'
-      - 'ghcr.io/biohackerellie/gomailer:{{ .Version }}'
+      - 'ghcr.io/biohackerellie/goMailer:latest'
+      - 'ghcr.io/biohackerellie/goMailer:{{ .Version }}'
     build_flag_templates:
       - '--platform=linux/amd64'
       - '--label=org.opencontainers.image.created={{.Date}}'
