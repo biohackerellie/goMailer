@@ -1,9 +1,7 @@
 package env
 
 import (
-	"log"
-
-	"github.com/joho/godotenv"
+	"os"
 )
 
 type AppConfig struct {
@@ -22,34 +20,26 @@ const (
 	OAUTH          = "OAUTH"
 )
 
-func readEnvFile(filePath string) map[string]string {
-	envMap, err := godotenv.Read(filePath)
-	if err != nil {
-		log.Fatal("error loading .env file", err)
-	}
-	return envMap
-}
-
-func GetEnv(envMap map[string]string) *AppConfig {
+func GetEnv() *AppConfig {
 	var config AppConfig
-	if val, ok := envMap[User]; ok {
+	if val, ok := os.LookupEnv(User); ok {
 		config.User = val
 	}
-	if val, ok := envMap[Pass]; ok {
+	if val, ok := os.LookupEnv(Pass); ok {
 		config.Pass = val
 	}
-	if val, ok := envMap[APIKey]; ok {
+	if val, ok := os.LookupEnv(APIKey); ok {
 		config.APIKey = val
 	}
-	if val, ok := envMap[AllowedDomains]; ok {
+	if val, ok := os.LookupEnv(AllowedDomains); ok {
 		config.AllowedDomains = val
 	}
-	if val, ok := envMap[OAUTH]; ok {
+	if val, ok := os.LookupEnv(OAUTH); ok {
 		config.OAUTH = val
 	}
 	return &config
 }
 
 func GetConfig() *AppConfig {
-	return GetEnv(readEnvFile(".env"))
+	return GetEnv()
 }
