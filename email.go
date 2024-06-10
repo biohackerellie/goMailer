@@ -30,7 +30,7 @@ func (rs EmailRequest) Routes() chi.Router {
 
 func (rs EmailRequest) sendEmail(w http.ResponseWriter, r *http.Request) {
 	var e EmailRequest
-	fmt.Println("Recieved: ", r)
+	fmt.Println("Recieved: ", r.Body)
 	var (
 		config = env.GetConfig()
 	)
@@ -55,9 +55,10 @@ func (rs EmailRequest) sendEmail(w http.ResponseWriter, r *http.Request) {
 	subject := "Subject: " + e.Subject + "!\n"
 	header := "From: " + from.Name + "<" + from.Address + ">\n"
 	msg := []byte(header + subject + mime + "\n" + e.HTML)
-
-	to := e.To
-	recipients := strings.Split(to, ", ")
+	recipients := strings.Split(e.To, ", ")
+	for i, recipient := range recipients {
+		recipients[i] = strings.TrimSpace(recipient)
+	}
 
 	errs := smtp.SendMail("smtp.gmail.com:587", auth, config.User, recipients, msg)
 	if errs != nil {
