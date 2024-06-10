@@ -1,0 +1,15 @@
+services:
+  server:
+    image: ghcr.io/biohackerellie/gomailer:latest
+    container_name: EmailApi
+    restart: unless-stopped
+    ports:
+      - '6969:6969'
+    environment:
+      API_KEY: ${API_KEY}
+      EMAIL_USER: ${EMAIL_USER}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      ALLOWED_DOMAINS: ${ALLOWED_DOMAINS}
+      OAUTH: ${OAUTH}
+    env_file:
+      - .env
