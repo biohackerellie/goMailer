@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/mail"
 	"net/smtp"
@@ -29,6 +30,7 @@ func (rs EmailRequest) Routes() chi.Router {
 
 func (rs EmailRequest) sendEmail(w http.ResponseWriter, r *http.Request) {
 	var e EmailRequest
+	fmt.Println("Recieved: ", r)
 	var (
 		config = env.GetConfig()
 	)
@@ -60,6 +62,7 @@ func (rs EmailRequest) sendEmail(w http.ResponseWriter, r *http.Request) {
 	errs := smtp.SendMail("smtp.gmail.com:587", auth, config.User, recipients, msg)
 	if errs != nil {
 		http.Error(w, errs.Error(), http.StatusInternalServerError)
+		fmt.Println(errs)
 		return
 	}
 }
